@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title id="title"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/template.css">
+    <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+</head>
+
+<body class="hold-transition login-page">
+    $(if chap-id)
+    <form name="sendin" action="$(link-login-only)" method="post">
+        <input type="hidden" name="username" />
+        <input type="hidden" name="password" />
+        <input type="hidden" name="dst" value="$(link-orig)" />
+        <input type="hidden" name="popup" value="true" />
+    </form>
+    <script type="text/javascript" src="md5.js"></script>
+    <script type="text/javascript">
+        function doLogin() {
+            disBtn();
+            document.sendin.username.value = document.login.username.value;
+            document.sendin.password.value = hexMD5('$(chap-id)' + document.login.password.value +
+                '$(chap-challenge)');
+            document.sendin.submit();
+            return false;
+        }
+    </script>
+    $(endif)
+
+
+    <div class="login-box">
+        <div class="login-logo">
+            <img class="mt-1" src="assets/images/logo.png" alt="Logo" style="width: 50%;">
+        </div>
+        <div class="card card-primary card-outline">
+            <div class="card-body login-card-body">
+                <h4 class="login-box-msg font-weight-bold" id="title1"></h4>
+                <form name="login" action="$(link-login-only)" method="post" $(if chap-id) onSubmit="return doLogin()"
+                    $(endif)>
+                    <input type="hidden" name="dst" value="$(link-orig)" />
+                    <input type="hidden" name="popup" value="true" />
+                    <div class="form-input mb-3">
+                        <input class="form-control" type="text" name="username" id="username" value="$(username)"
+                            placeholder="Username" autofocus autocomplete="off" required>
+                    </div>
+                    <div class="form-input mb-3">
+                        <input class="form-control" type="password" name="password" id="password"
+                            placeholder="Password">
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" class="btn bg-gradient-primary btn-block rounded">
+                                <i class="icon icon-login">&#xe803;</i>Log In
+                            </button>
+                            $(if trial == 'yes')
+                            <a class="btn bg-gradient-info btn-block"
+                                href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)">
+                                <i class="icon icon-login">&#xe803;</i>Trial
+                            </a>
+                            $(endif)
+                        </div>
+                    </div>
+                </form>
+                <div class="social-auth-links text-center table-responsive p-0">
+                    <p class="mt-2 font-weight-bold mb-1" id="priceList"></p>
+                    <table class="table table-sm table-head-fixed table-hover text-nowrap mb-0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Validity</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>6H</td>
+                                <td>6 Hours</td>
+                                <td>Rp. 2.000</td>
+                            </tr>
+                            <tr>
+                                <td>1D</td>
+                                <td>1 Day</td>
+                                <td>Rp. 5.000</td>
+                            </tr>
+                            <tr>
+                                <td>7D</td>
+                                <td>7 Day</td>
+                                <td>Rp. 15.000</td>
+                            </tr>
+                            <tr>
+                                <td>1M</td>
+                                <td>30 Day</td>
+                                <td>Rp. 50.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-center mt-2 mb-0" id="address"></p>
+                <p class="text-center">Phone : <span class="font-weight-bold" id="phone"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/template.js"></script>
+    <script src="assets/js/sweetalert2.min.js"></script>
+    <script src="assets/js/data.js"></script>
+
+    $(if error)
+    <script type="text/javascript">
+        var error = "$(error)";
+        Swal.fire({
+            icon: 'error',
+            title: error,
+        })
+    </script>
+    $(endif)
+
+    <script>
+        document.getElementById('title').innerText = 'Login | ' + data.company
+        for (let key in dataLogin) {
+            if (dataLogin.hasOwnProperty(key)) {
+                document.getElementById(key).innerHTML = dataLogin[key];
+            }
+        }
+        function disBtn() {
+            $('.btn').prop('disabled', true)
+        }
+    </script>
+</body>
+
+</html>

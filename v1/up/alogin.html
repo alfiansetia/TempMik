@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title id="title"></title>
+	<meta http-equiv="refresh" content="2; url=$(link-redirect)">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<meta name="theme-color" content="#1FA2FF" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/template.css">
+	<link rel="stylesheet" href="assets/css/sweetalert2.min.css">
+	<link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body onload="startClock()">
+	<div class="main">
+		<table width="100%" height="100%">
+			<tr>
+				<td align="center" valign="middle">
+					Anda telah terhubung
+					<br><br>
+					Juka belum, <a style="color:#000" href="success.html">klik di sini</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/js/template.js"></script>
+	<script src="assets/js/sweetalert2.min.js"></script>
+	<script src="assets/js/data.js"></script>
+	<script>
+		document.getElementById('title').innerText = dataAlogin.title + ' | ' + data.company
+		function go() {
+			window.location = 'status.html';
+			$('.btn').prop('disabled', true)
+		}
+		function startClock() {
+			Swal.fire({
+				icon: 'success',
+				title: dataAlogin.alert,
+				html: "<button class='btn btn-lg bg-gradient-primary' onclick='go()'>OK</button>",
+				showConfirmButton: false,
+				allowOutsideClick: false
+			})
+			$(if popup == 'true')
+				open('$(link-status)', 'hotspot_status', 'toolbar=0,location=0,directories=0,status=0,menubars=0,resizable=1,width=290,height=200');
+			$(endif)
+			// location.href = 'status.html';
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    $(if refresh-timeout)
+    <meta http-equiv="refresh" content="$(refresh-timeout-secs)">
+    $(endif)
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title id="title"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/template.css">
+    <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script language="JavaScript">
+
+        $(if advert-pending == 'yes')
+            var popup = '';
+        function focusAdvert() {
+            if (window.focus) popup.focus();
+        }
+        function openAdvert() {
+            popup = open('$(link-advert)', 'hotspot_advert', '');
+            setTimeout("focusAdvert()", 1000);
+        }
+        $(endif)
+        function openLogout() {
+            if (window.name != 'hotspot_status') return true;
+            open('$(link-logout)', 'hotspot_logout', 'toolbar=0,location=0,directories=0,status=0,menubars=0,resizable=1,width=280,height=250');
+            window.close();
+            return false;
+        }
+    </script>
+</head>
+
+<body class="hold-transition login-page" $(if advert-pending=='yes' ) onLoad="openAdvert()" $(endif)>
+    <div class="login-box">
+        <div class="login-logo">
+            <img class="mt-1" src="assets/images/logo.png" alt="Logo" style="width: 50%;">
+        </div>
+        <div class="card card-primary card-outline">
+            <div class="card-body login-card-body">
+                <div class="font-weight-bold text-center m-0">
+                    <span id="title1"></span>
+                    $(if login-by == 'trial')
+                    Trial User!
+                    $(elif login-by != 'mac')
+                    $(username) !
+                    $(endif)
+                </div>
+                <p class="text-center mt-2"><i style="font-size:50px;" class="icon icon-user-circle-o">&#xf2be;</i></p>
+                <div class="social-auth-links text-center table-responsive p-0 mt-0">
+                    <form action="$(link-logout)" name="logout" onSubmit="return openLogout()" id="form">
+                        <table class="table table-sm table-head-fixed table-hover text-nowrap mb-0">
+                            <tbody>
+                                <tr>
+                                    <td class="text-right">IP Address <i class="icon icon-sitemap">&#xf0e8;</i></td>
+                                    <td class="text-left">$(ip)</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right">MAC Address <i class="icon icon-barcode">&#xe80a;</i></td>
+                                    <td class="text-left">$(mac)</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right">Upload <i class="icon icon-upload">&#xe808;</i></td>
+                                    <td class="text-left">$(bytes-in-nice)</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right">Download <i class="icon icon-download">&#xe809;</i></td>
+                                    <td class="text-left">$(bytes-out-nice)</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right">Uptime <i class="icon icon-exchange">&#xf0ec;</i></td>
+                                    <td class="text-left">$(uptime)</td>
+                                </tr>
+                                $(if remain-bytes-total)
+                                <tr>
+                                    <td class="text-right">Quota Left <i class="icon icon-hourglass-2">&#xf252;</i></td>
+                                    <td class="text-left">$(remain-bytes-total-nice)</td>
+                                </tr>
+                                $(else)
+                                <tr>
+                                    <td class="text-right">Quota Left <i class="icon icon-hourglass-2">&#xf252;</i></td>
+                                    <td class="text-left">Unlimited</td>
+                                </tr>
+                                $(endif)
+                                $(if session-time-left)
+                                <tr>
+                                    <td class="text-right">Time Left <i class="icon icon-clock">&#xe805;</i></td>
+                                    <td class="text-left">$(session-time-left)</td>
+                                </tr>
+                                $(else)
+                                <tr>
+                                    <td class="text-right">Time Left <i class="icon icon-clock">&#xe805;</i></td>
+                                    <td class="text-left">Unlimited</td>
+                                </tr>
+                                $(endif)
+                                $(if blocked == 'yes')
+                                <tr>
+                                    <td class="text-right">Status <i class="icon icon-check">&#xe807;</i></td>
+                                    <td class="text-left"><a href="$(link-advert)"
+                                            target="hotspot_advert">advertisement</a> required</td>
+                                </tr>
+                                $(elif refresh-timeout)
+                                <tr>
+                                    <td class="text-right">Refresh <i <i class="icon icon-arrows-cw">&#xe800;</i></td>
+                                    <td class="text-left">$(refresh-timeout)</td>
+                                </tr>
+                                $(endif)
+                                <!-- <tr>
+                                    <td class="text-right">Expired <i <i class="icon icon-calendar">&#xe806;</i></td>
+                                    <td class="text-left">20 Days</td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                        $(if login-by-mac != 'yes')
+                        <button type="button" class="btn bg-gradient-danger btn-block" onclick="logout1()">
+                            <i class="icon icon-logout">&#xe804;</i>
+                            Log Out
+                        </button>
+                        $(endif)
+
+                    </form>
+                </div>
+                <p class="text-center mt-2 mb-0" id="address"></p>
+                <p class="text-center">Phone : <span class="font-weight-bold" id="phone"></span></p>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/sweetalert2.min.js"></script>
+    <script src="assets/js/template.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script>
+        document.getElementById('title').innerText = dataStatus.title + ' | ' + data.company
+        document.getElementById('title1').innerHTML = dataStatus.title1
+        document.getElementById('address').innerHTML = dataLogin.address
+        document.getElementById('phone').innerHTML = dataLogin.phone
+        function logout1() {
+            Swal.fire({
+                icon: 'warning',
+                title: dataStatus.alert,
+                html: "<button class='btn btn-lg bg-gradient-primary' onclick='go()'>OK</button>",
+                showCloseButton: true,
+                showConfirmButton: false,
+            })
+        }
+        function go() {
+            document.getElementById('form').submit();
+            $('.btn').prop('disabled', true)
+        }
+    </script>
+</body>
+
+</html>

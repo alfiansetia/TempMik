@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    <script language="JavaScript">
 
-        $(if advert-pending == 'yes')
-            var popup = '';
+    $(if advert-pending == 'yes')
+    <script language="JavaScript">
+        var popup = '';
         function focusAdvert() {
             if (window.focus) popup.focus();
         }
@@ -24,10 +24,13 @@
             popup = open('$(link-advert)', 'hotspot_advert', '');
             setTimeout("focusAdvert()", 1000);
         }
-        $(endif)
+    </script>
+    $(endif)
+    <script language="JavaScript">
         function openLogout() {
             if (window.name != 'hotspot_status') return true;
-            open('$(link-logout)', 'hotspot_logout', 'toolbar=0,location=0,directories=0,status=0,menubars=0,resizable=1,width=280,height=250');
+            open('$(link-logout)', 'hotspot_logout',
+                'toolbar=0,location=0,directories=0,status=0,menubars=0,resizable=1,width=280,height=250');
             window.close();
             return false;
         }
@@ -44,7 +47,7 @@
                 <div class="font-weight-bold text-center m-0">
                     <span id="title1"></span>
                     $(if login-by == 'trial')
-                    Trial User!
+                    Trial User !
                     $(elif login-by != 'mac')
                     $(username) !
                     $(endif)
@@ -149,7 +152,7 @@
         }
         function go() {
             document.getElementById('form').submit();
-            $('.btn').prop('disabled', true)
+            $('.btn').prop('disabled', true);
         }
     </script>
 </body>

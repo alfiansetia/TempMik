@@ -1,5 +1,6 @@
 var data = {
-    'company': '@NET'
+    'company': '@NET',
+    'notif': 'Internet Sedang Gangguan' //empty or comment to disable notif
 }
 var dataLogin = {
     'title1': 'Please Login First',

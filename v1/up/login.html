@@ -114,17 +114,8 @@
     <script src="assets/js/sweetalert2.min.js"></script>
     <script src="assets/js/data.js"></script>
 
-    $(if error)
     <script type="text/javascript">
-        var error = "$(error)";
-        Swal.fire({
-            icon: 'error',
-            title: error,
-        })
-    </script>
-    $(endif)
-
-    <script>
+        var sw = []
         document.getElementById('title').innerText = 'Login | ' + data.company
         for (let key in dataLogin) {
             if (dataLogin.hasOwnProperty(key)) {
@@ -134,7 +125,22 @@
         function disBtn() {
             $('.btn').prop('disabled', true)
         }
+        if (data.notif) {
+            sw.push({ title: data.notif, icon: 'info', })
+        }
     </script>
+
+    $(if error)
+    <script type="text/javascript">
+        var error = "$(error)";
+        sw.push({ title: error, icon: 'error', })
+    </script>
+    $(endif)
+
+    <script type="text/javascript">
+        swal.queue(sw);
+    </script>
+
 </body>
 
 </html>
